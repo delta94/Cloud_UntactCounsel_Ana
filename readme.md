@@ -50,8 +50,8 @@ $ yarn start or npm run start
  샘플 에디터 [https://stackedit.io/app#](https://stackedit.io/app#)
  
 ## 팀 정보 (Team Information)
-- son min woo (mwson987@gmail.com), Github Id: SonMinWoo
-- kim su ji (suji999@gmail.com), Github Id: suji999
+- son min woo (mwson987@gmail.com), [Github](https://github.com/SonMinWoo)
+- lee hyeong chang (hc9904@hanyang.ac.kr), [Github](https://github.com/AnOldStory)
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
- * [MIT](https://github.com/osam2020-WEB/Sample-ProjectName-TeamName/blob/master/license.md)
+ * [MIT](https://github.com/osamhack2020/Cloud_UntactCounsel_Ana/blob/master/license)
