@@ -1,0 +1,22 @@
+{
+  "name": "react-node-boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/AnOldStory/react-node-boilerplate.git",
+  "author": "AnOldStory <hc9904@naver.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "cd api-server && NODE_ENV=developement yarn start",
+    "server:install": "cd api-server && yarn",
+    "front": "cd frontend && NODE_ENV=developement yarn start",
+    "front:build": "cd frontend && yarn build",
+    "front:install": "cd frontend && yarn",
+    "prod": "yarn front:build && cd api-server && NODE_ENV=production yarn start",
+    "prod:fast": "cd api-server && NODE_ENV=production yarn start",
+    "debug": "concurrently --kill-others-on-fail -n server,front \"yarn server\" \"yarn front\"",
+    "install": "concurrently -n server,front \"yarn server:install\" \"yarn front:install\""
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
