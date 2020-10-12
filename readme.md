@@ -50,7 +50,7 @@ $ yarn start or npm run start
  샘플 에디터 [https://stackedit.io/app#](https://stackedit.io/app#)
  
 ## 팀 정보 (Team Information)
-- hong gil dong (hong999@gmail.com), Github Id: gildong999
+- son min woo (mwson987@gmail.com), Github Id: SonMinWoo
 - kim su ji (suji999@gmail.com), Github Id: suji999
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
