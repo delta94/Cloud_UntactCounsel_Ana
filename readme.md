@@ -28,7 +28,7 @@
  - DB 등 사용한 다른 프로그램 
  
 ### front-end
-![react](https://cdn.worldvectorlogo.com/logos/react.svg){: width="100" height="100"}
+![react](https://cdn.worldvectorlogo.com/logos/react.svg =100x100) 
  -  react.js
 
 
