@@ -37,7 +37,6 @@ $ git clone https://github.com/SonMinWoo/Cloud_UntactCounsel_Ana.git
 ```
 
 ## 프로젝트 사용법 (Getting Started)
-**마크다운 문법을 이용하여 자유롭게 기재**
 
 1. Branch Organization
     - Submit all changes directly to the master branch. We don’t use separate branches for development or for upcoming releases. We do our best to keep master in good shape, with all tests passing.
