@@ -33,7 +33,7 @@
 
 ## 설치 안내 (Installation Process)
 ```bash
-$ git clone https://github.com/SonMinWoo/Cloud_UntactCounsel_Ana.git
+$ git clone https://github.com/osamhack2020/Cloud_UntactCounsel_Ana.git
 ```
 
 ## 프로젝트 사용법 (Getting Started)
