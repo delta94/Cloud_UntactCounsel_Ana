@@ -28,9 +28,9 @@
  - DB 등 사용한 다른 프로그램 
  
 ### front-end
- -  react.js, vue.js 등 사용한 front-end 프레임워크 
- -  UI framework
- - 기타 사용한 라이브러리
+![react](https://cdn.worldvectorlogo.com/logos/react.svg)
+ -  react.js
+
 
 ## 설치 안내 (Installation Process)
 ```bash
