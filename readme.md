@@ -6,7 +6,7 @@
 **2019프로젝트, readme.md를 참고하여 개발자님의 새로운 프로젝트를 만들어주세요!**
 
 # Logo
-![Logo](./asset/logo.png)
+<img src="./asset/logo.png" width="300" height="300">
 
 
 ## 팀소개 및 프로잭트 설명 동영상
