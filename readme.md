@@ -5,10 +5,9 @@
 [https://github.com/osam2019](https://github.com/osam2019)
 **2019프로젝트, readme.md를 참고하여 개발자님의 새로운 프로젝트를 만들어주세요!**
 
-# Smaple Logo
-![Logo](https://logosbynick.com/wp-content/uploads/2018/03/final-logo-example.png)
+# Logo
+<img src="./asset/logo.png" width="300" height="300">
 
-팀명 텍스트 및 팀명 로고 이미지 **(택1)**
 
 ## 팀소개 및 프로잭트 설명 동영상
 국군지휘통신사령부(Republic of Korea Defense Communication Command) 소속 병사 두명으로 구성됨.
