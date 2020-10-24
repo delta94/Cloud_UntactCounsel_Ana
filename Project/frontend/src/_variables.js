@@ -1,9 +1,10 @@
 const production = {
-  API_URL: "https://anoldstory.net/api",
+  API_URL: "https://220.94.42.246:8080/api",
 };
 
 const development = {
-  API_URL: "http://locahost:3001/api",
+  API_URL: "http://220.94.42.246:8080/api",
 };
 
-module.exports = process.env.NODE_ENV === "production" ? production : development;
+module.exports =
+  process.env.NODE_ENV === "production" ? production : development;

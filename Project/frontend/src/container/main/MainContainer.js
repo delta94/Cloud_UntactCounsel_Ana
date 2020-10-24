@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import Config from "_variables";
-import MainCounter from "./MainCounter";
+
+import Login from "./Login";
+import Signup from "./Signup";
 
 import "./Main.scss";
 
@@ -9,8 +11,8 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
-        {/* {process.env.NODE_ENV} */}
-        <MainCounter msg="world!" />
+        <Login {...this.props} />
+        <Signup {...this.props} />
       </div>
     );
   }

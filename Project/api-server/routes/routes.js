@@ -1,12 +1,38 @@
-var path = require("path");
-var indexRouter = require("./index");
+const path = require("path");
+const indexRouter = require("./public/index");
+
+/* public */
+const loginRouter = require("./public/login");
+const signupRouter = require("./public/signup");
+
+/* private */
+// const chatRouter = require("./websocket/chat");
+const chatRouter = require("./chat/chat");
+
+/* manage */
+const adminRouter = require("./admin/admin");
+const managerRouter = require("./manager/manager");
 
 /* router  */
 module.exports = (app) => {
-  app.use("/api", indexRouter);
+  /* public */
+  app.use("/api", indexRouter); // main
 
+  app.use("/api/login", loginRouter);
+  app.use("/api/signup", signupRouter);
+
+  /* chat */
+  app.use("/api/chat", chatRouter);
+
+  /* manage */
+  app.use("/api/admin", adminRouter);
+  app.use("/api/manager", managerRouter);
+
+  // frontend zone
   app.use("*", (req, res, next) => {
-    res.sendFile(path.join(__dirname, "..", "..", "frontend", "build", "index.html"));
+    res.sendFile(
+      path.join(__dirname, "..", "..", "frontend", "build", "index.html")
+    );
   });
 
   // error handler

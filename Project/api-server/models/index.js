@@ -3,11 +3,16 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var config = require("../config/config");
-var sequelize = new Sequelize(config.DATABASE.database, config.DATABASE.user, config.DATABASE.password, {
-  host: config.DATABASE.host,
-  dialect: config.DATABASE.dialect,
-  timezone: config.DATABASE.timezone,
-});
+var sequelize = new Sequelize(
+  config.DATABASE.database,
+  config.DATABASE.user,
+  config.DATABASE.password,
+  {
+    host: config.DATABASE.host,
+    dialect: config.DATABASE.dialect,
+    timezone: config.DATABASE.timezone,
+  }
+);
 
 var db = {};
 
@@ -16,7 +21,10 @@ fs.readdirSync(__dirname)
     return file.indexOf(".") !== 0 && file !== "index.js";
   })
   .forEach((file) => {
-    var model = sequelize.import(path.join(__dirname, file));
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes
+    );
     db[model.name] = model;
   });
 
