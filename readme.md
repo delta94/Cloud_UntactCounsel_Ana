@@ -12,11 +12,11 @@
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
 * Browser : ECMAScript 6 support
 
-## 기술 스택 (Technique Used) (예시)
+## 기술 스택 (Technique Used)
 ### Server(back-end)
- - server language : 
- - framework : 
- - DB :
+ - server language : Node.js
+ - framework :  Express
+ - DB :PostgreSQL
  
 ### front-end
 <img src="https://cdn.worldvectorlogo.com/logos/react.svg" width="300" height="300">
