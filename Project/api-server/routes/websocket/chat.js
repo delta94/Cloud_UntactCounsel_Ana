@@ -25,7 +25,6 @@ var user = [];
 //message author
 
 io.on("connection", function (socket) {
-  console.log("Global 로그인헀음");
   io.emit("chat-pull", "ww");
 
   socket.on("queue", async (info) => {
@@ -39,8 +38,8 @@ io.on("connection", function (socket) {
           mansoc = manager[0];
           manager.splice(0, 1);
           [err, room_num] = await ChatDB.createChat(usersoc.sid, mansoc.sid);
-          io.to(usersoc.sid).emit("queue_match", room_num);
-          io.to(mansoc.sid).emit("queue_match", room_num);
+          io.to(usersoc.sid).emit("queue_match", room_num, usersoc.id);
+          io.to(mansoc.sid).emit("queue_match", room_num, mansoc.id);
         } else {
           user.push(info);
         }
@@ -50,8 +49,8 @@ io.on("connection", function (socket) {
           usersoc = user[0];
           user.splice(0, 1);
           [err, room_num] = await ChatDB.createChat(usersoc.sid, mansoc.sid);
-          io.to(usersoc.sid).emit("queue_match", room_num);
-          io.to(mansoc.sid).emit("queue_match", room_num);
+          io.to(usersoc.sid).emit("queue_match", room_num, usersoc.id);
+          io.to(mansoc.sid).emit("queue_match", room_num, mansoc.id);
         } else {
           manager.push(info);
         }
@@ -63,7 +62,6 @@ io.on("connection", function (socket) {
   });
 
   socket.on("chat_join", async (info) => {
-    console.log("join");
     let err, room_num;
     room_num = JSON.parse(info).room_num;
     [err, info] = await parseToken(info);

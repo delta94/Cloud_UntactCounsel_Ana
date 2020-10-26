@@ -1,1 +1,131 @@
 @import "_variables.scss";
+
+.chat {
+  list-style: none;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+
+.chat .bottom_area {
+  width: 100%;
+  height: 20vh;
+  bottom: 0;
+  position: fixed;
+}
+
+.chat .bottom_area .send_area {
+  width: 15%;
+  height: 100%;
+  position: relative;
+  float: right;
+}
+
+.chat .bottom_area .send_area > button {
+  border: 0;
+  display: block;
+  background: $chat-right-send;
+  color: #fff;
+  position: relative;
+  border-radius: 0 0.5em 0.5em 0;
+
+  font-size: 1.2em;
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+}
+
+.chat .bottom_area > input {
+  width: calc(85% - 2px);
+  height: calc(100% - 2px);
+  padding: 0;
+  float: left;
+  position: relative;
+  border: 0.5px black solid;
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+// .chat .bottom_area .send_area > button:hover {
+//   background: #fff;
+//   color: $chat-background;
+// }
+
+// .chat .bottom_area .send_area > button:before,
+// button:after {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   height: 0.2em;
+//   width: 0;
+//   background: $chat-background;
+//   transition: 400ms ease all;
+// }
+
+// .chat .bottom_area .send_area > button:after {
+//   right: inherit;
+//   top: inherit;
+//   left: 0;
+//   bottom: 0;
+// }
+
+// .chat .bottom_area .send_area > button:hover:before,
+// button:hover:after {
+//   width: 100%;
+//   transition: 800ms ease all;
+// }
+
+// @media only screen and (max-width: 768px) {
+//   .left_area {
+//     display: none;
+//   }
+
+//   .chat .left_area .list_area {
+//     display: none;
+//   }
+
+//   .chat .left_area .user {
+//     display: none;
+//   }
+
+//   .chat .left_area .list_area .list {
+//     display: none;
+//   }
+
+//   .chat .chat_main {
+//     width: 100%;
+//   }
+
+//   .chat .bottom_area {
+//     width: 100%;
+//   }
+
+//   .chat .bottom_area > input {
+//     width: calc(80% - 0.95em);
+//   }
+
+//   .chat .bottom_area .send_area {
+//     width: 20%;
+//     height: 100%;
+//     position: relative;
+//     float: right;
+//     background: $chat-background;
+//   }
+// }
+
+.messagesEnd {
+  float: left;
+}
+
+.err {
+  font-family: helvetica;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  font-size: 1vw;
+  color: red;
+}

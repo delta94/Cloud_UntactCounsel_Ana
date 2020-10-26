@@ -1,5 +1,5 @@
 const production = {
-  API_URL: "https://220.94.42.246:8080/api",
+  API_URL: "http://220.94.42.246:8080/api",
   Socket_URL: "http://220.94.42.246:8080",
 };
 

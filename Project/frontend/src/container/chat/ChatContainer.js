@@ -13,9 +13,12 @@ class ChatContainer extends Component {
       room: -1,
       text: "",
       err: "",
+      onChat: false,
+      myname: "",
     };
-    this.handleTyping = this.handleTyping.bind(this);
     this.handlePush = this.handlePush.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleTyping = this.handleTyping.bind(this);
     this.handleQueue = this.handleQueue.bind(this);
     this.handleError = this.handleError.bind(this);
     this.handleChatPull = this.handleChatPull.bind(this);
@@ -31,8 +34,8 @@ class ChatContainer extends Component {
       });
 
       /* subscribe chat-pull */
-      this.socket.on("chat_pull", this.handleChatPull);
       this.socket.on("queue_match", this.handleQueue);
+      this.socket.on("chat_pull", this.handleChatPull);
       this.socket.on("leaveRoom", this.handleLeaveRoom);
       this.socket.on("err", this.handleError);
 
@@ -51,12 +54,6 @@ class ChatContainer extends Component {
     });
   }
 
-  handleEnter(e) {
-    if (e.key === "Enter") {
-      this.handlePush();
-    }
-  }
-
   handlePush() {
     if (this.state.text.trim().length > 0) {
       this.socket.emit(
@@ -73,6 +70,12 @@ class ChatContainer extends Component {
     }
   }
 
+  handleEnter(e) {
+    if (e.key === "Enter") {
+      this.handlePush();
+    }
+  }
+
   handleChatPull(msg, id) {
     let result = this.state.Chats;
     result.push({ msg, author: id });
@@ -82,8 +85,12 @@ class ChatContainer extends Component {
     }
   }
 
-  handleQueue(num) {
-    this.setState({ room: num, err: num });
+  handleQueue(num, myname) {
+    this.setState({
+      room: num,
+      onChat: true,
+      myname,
+    });
     this.socket.emit(
       "chat_join",
       JSON.stringify({
@@ -99,6 +106,7 @@ class ChatContainer extends Component {
       JSON.stringify({
         num: this.state.num,
         id: this.props.token,
+        onChat: false,
       })
     );
     this.setState({ room: -1 });
@@ -110,43 +118,49 @@ class ChatContainer extends Component {
 
   render() {
     let { handleTyping, handleEnter, handlePush } = this;
-    let { Chats, text, err } = this.state;
+    let { Chats, text, err, onChat, myname } = this.state;
     return (
       <div className="chat">
-        <div
-          className="g_message_area"
-          ref={(el) => {
-            this.messagesEnd = el;
-          }}
-        >
-          <div className="g_text g_system">
-            안녕하세요 여기는 공용 채팅 공간입니다.
-          </div>
-          {Chats.map((info, i) => {
-            return (
-              <div key={i}>
-                <div>{info.author}</div>
-                <div>{info.msg}</div>
+        {!onChat ? (
+          "매치중..."
+        ) : (
+          <>
+            <div
+              className="message_area"
+              ref={(el) => {
+                this.messagesEnd = el;
+              }}
+            >
+              <div className="text system">
+                안녕하세요 채팅이 시작 되었습니다.
               </div>
-            );
-          })}
-        </div>
+              {Chats.map((info, i) => {
+                return (
+                  <div key={i}>
+                    <div>{info.author == myname ? "나" : info.author}</div>
+                    <div>{info.msg}</div>
+                  </div>
+                );
+              })}
+            </div>
 
-        <div className="g_bottom_area">
-          <input
-            type="text"
-            id="g_text_input"
-            onChange={handleTyping}
-            value={text}
-            onKeyDown={handleEnter}
-          />
-          <div className="g_send_area">
-            <button type="button" name="g_button2" onClick={handlePush}>
-              SEND
-            </button>
-          </div>
-        </div>
-        {err}
+            <div className="bottom_area">
+              <input
+                type="text"
+                id="text_input"
+                onChange={handleTyping}
+                onKeyDown={handleEnter}
+                value={text}
+              />
+              <div className="send_area">
+                <button type="button" name="button2" onClick={handlePush}>
+                  SEND
+                </button>
+              </div>
+            </div>
+            {err}
+          </>
+        )}
       </div>
     );
   }
