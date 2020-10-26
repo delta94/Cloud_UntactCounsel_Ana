@@ -16,5 +16,13 @@ module.exports = function (sequelize, Datatypes) {
     },
   });
 
+  // Chat_list.associate = function (models) {
+  //   Chat_list.belongsTo(models.Chat, {
+  //     foreignKey: {
+  //       name: "chat_id",
+  //     },
+  //   });
+  // };
+
   return Chat_list;
 };

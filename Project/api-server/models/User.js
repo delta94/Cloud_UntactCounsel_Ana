@@ -9,8 +9,9 @@ module.exports = function (sequelize, Datatypes) {
       type: Datatypes.INTEGER,
       allowNull: false,
     },
-    room: {
+    socket: {
       type: Datatypes.INTEGER,
+      allowNull: true,
       defaultValue: -1,
     },
   });

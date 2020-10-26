@@ -6,27 +6,42 @@ import Config from "_variables";
 import "./Chat.scss";
 
 class ChatContainer extends Component {
-  state = { Chats: [], text: "" };
+  constructor(props) {
+    super(props);
+    this.state = {
+      Chats: [],
+      room: -1,
+      text: "",
+      err: "",
+    };
+    this.handleTyping = this.handleTyping.bind(this);
+    this.handlePush = this.handlePush.bind(this);
+    this.handleQueue = this.handleQueue.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleChatPull = this.handleChatPull.bind(this);
+  }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.token) {
-      let bodyData = { token: this.props.token };
-      let response = await fetch(Config.API_URL + "/chat/join", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: Object.keys(bodyData)
-          .map(
-            (key) =>
-              encodeURIComponent(key) + "=" + encodeURIComponent(bodyData[key])
-          )
-          .join("&"),
+      console.log("Global Login");
+      /* check global connection */
+      this.socket = io.connect(Config.Socket_URL, {
+        transports: ["websocket"],
+        forceNew: true,
       });
-      let { statusCode, token, rank } = await response.json();
-      if (statusCode === 200) {
-        this.props.tokenChanger(token, rank);
-      } else {
-        console.log(token);
-      }
+
+      /* subscribe chat-pull */
+      this.socket.on("chat_pull", this.handleChatPull);
+      this.socket.on("queue_match", this.handleQueue);
+      this.socket.on("leaveRoom", this.handleLeaveRoom);
+      this.socket.on("err", this.handleError);
+
+      this.socket.emit(
+        "queue",
+        JSON.stringify({
+          token: this.props.token,
+        })
+      );
     }
   }
 
@@ -45,10 +60,11 @@ class ChatContainer extends Component {
   handlePush() {
     if (this.state.text.trim().length > 0) {
       this.socket.emit(
-        "chat-push",
+        "chat_push",
         JSON.stringify({
-          token: this.state.token,
-          text: this.state.text.trim(),
+          token: this.props.token,
+          msg: this.state.text.trim(),
+          room_num: this.state.room,
         })
       );
       this.setState({
@@ -57,66 +73,47 @@ class ChatContainer extends Component {
     }
   }
 
-  handleResponse(msg) {
-    let result = this.state.chats;
-    result.push(msg);
-    this.setState({
-      chats: result,
-      err: "",
-    });
+  handleChatPull(msg, id) {
+    let result = this.state.Chats;
+    result.push({ msg, author: id });
+    this.setState({ Chats: result });
     if (this.messagesEnd) {
       this.messagesEnd.scrollBy({ top: 9999, behavior: "smooth" });
     }
   }
 
-  Qin = async () => {
-    let bodyData = { token: this.props.token };
-    let response = await fetch(Config.API_URL + "/chat/queue-in", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: Object.keys(bodyData)
-        .map(
-          (key) =>
-            encodeURIComponent(key) + "=" + encodeURIComponent(bodyData[key])
-        )
-        .join("&"),
-    });
-    let { statusCode, num, msg } = await response.json();
-    if (statusCode === 200) {
-      console.log(num);
-    } else {
-      console.log(msg);
-    }
-  };
+  handleQueue(num) {
+    this.setState({ room: num, err: num });
+    this.socket.emit(
+      "chat_join",
+      JSON.stringify({
+        token: this.props.token,
+        room_num: this.state.room,
+      })
+    );
+  }
 
-  // QCh = async () => {
-  //   let bodyData = { token: this.props.token };
-  //   let response = await fetch(Config.API_URL + "/chat/queue-check", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     body: Object.keys(bodyData)
-  //       .map(
-  //         (key) =>
-  //           encodeURIComponent(key) + "=" + encodeURIComponent(bodyData[key])
-  //       )
-  //       .join("&"),
-  //   });
-  //   let { statusCode, token, rank } = await response.json();
-  //   if (statusCode === 200) {
-  //     this.props.tokenChanger(token, rank);
-  //   } else {
-  //     console.log(token);
-  //   }
-  // };
+  handleLeaveRoom() {
+    this.socket.emit(
+      "leaveRoom",
+      JSON.stringify({
+        num: this.state.num,
+        id: this.props.token,
+      })
+    );
+    this.setState({ room: -1 });
+  }
+
+  handleError(err) {
+    this.setState({ err: err });
+  }
 
   render() {
     let { handleTyping, handleEnter, handlePush } = this;
-    let { Chats, text } = this.state;
+    let { Chats, text, err } = this.state;
     return (
       <div className="chat">
-        <button onClick={this.Qin}>Qin</button>
-        {/* <button onClick={this.Qch}></button> */}
-        {/* <div
+        <div
           className="g_message_area"
           ref={(el) => {
             this.messagesEnd = el;
@@ -125,21 +122,16 @@ class ChatContainer extends Component {
           <div className="g_text g_system">
             안녕하세요 여기는 공용 채팅 공간입니다.
           </div>
-          {Chats.map((info) => {
+          {Chats.map((info, i) => {
             return (
-              <div>
+              <div key={i}>
                 <div>{info.author}</div>
                 <div>{info.msg}</div>
               </div>
             );
           })}
-          {(() => {
-            let hello;
-            return <div>gello</div>;
-          })()}
-        </div> */}
+        </div>
 
-        {/* 
         <div className="g_bottom_area">
           <input
             type="text"
@@ -153,7 +145,8 @@ class ChatContainer extends Component {
               SEND
             </button>
           </div>
-        </div> */}
+        </div>
+        {err}
       </div>
     );
   }

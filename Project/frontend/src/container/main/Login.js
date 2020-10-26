@@ -33,7 +33,7 @@ class Login extends Component {
     if (statusCode === 200) {
       this.props.tokenChanger(token, rank);
     } else {
-      console.log(token);
+      alert(token);
     }
   };
 

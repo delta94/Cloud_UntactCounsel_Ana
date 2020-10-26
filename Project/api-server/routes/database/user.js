@@ -37,7 +37,6 @@ exports.loginUser = async (username, password) => {
     });
     if (user.validPassword(password, user.password)) {
       /* valid password */
-      console.log(info.get())
       let token = jwt.sign(info.get(), config.JWT_SECRET);
       callback = [null, token, info.rank];
     } else {
@@ -50,9 +49,16 @@ exports.loginUser = async (username, password) => {
   return callback;
 };
 
-exports.checkRoom = async (id) => {
+exports.updateSocket = async (id, socket) => {
+  let callback = [true, 0];
+  let info = await Models.User.Update({ socket }, { where: { id } });
+  if (info) callback = [null, info.socket];
+  return callback;
+};
+
+exports.getSocket = async (id) => {
   let callback = [true, 0];
   let info = await Models.User.findOne({ where: { id } });
-  if (info) callback = [null, info.room];
+  if (info) callback = [null, info.socket];
   return callback;
 };

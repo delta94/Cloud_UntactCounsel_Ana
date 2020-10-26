@@ -8,6 +8,7 @@ import ChatContainer from "container/chat/ChatContainer";
 class Router extends Component {
   state = {
     token: "",
+    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJhIiwicmFuayI6MSwicm9vbSI6MiwiY3JlYXRlZEF0IjoiMjAyMC0xMC0yNFQwODozNzowMC44ODNaIiwidXBkYXRlZEF0IjoiMjAyMC0xMC0yNFQwODo0Njo0NC4zNDdaIiwiaWF0IjoxNjAzNTM1MTUzfQ.s3I5vDmXd2HHqL3cMVXjzP6dO1Fr-zM-O2SWuqDtJWU",
     rank: 0,
   };
 
@@ -16,7 +17,6 @@ class Router extends Component {
       console.log("토큰 번경!" + token);
       console.log("권한" + rank);
       this.setState({ token, rank });
-      console.log(this);
     },
   };
 
